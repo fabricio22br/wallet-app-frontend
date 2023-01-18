@@ -80,7 +80,7 @@ button.small {
 }
 
 input {
-  background-color: #f4f4f9;
+  background-color: transparent;
   width: 100%;
   height: 48px;
   border-color: #06bee1;
@@ -89,8 +89,26 @@ input {
   border-radius: 8px;
   color: #010400;
   font-size: 16px;
+  font-weight: 400;
   padding: 6px;
   box-sizing: border-box;
+  margin-bottom: 12px;
+}
+
+select {
+  background-color: transparent;
+  width: 100%;
+  height: 48px;
+  border-color: #06bee1;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 8px;
+  color: #010400;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 6px;
+  box-sizing: border-box;
+  margin-bottom: 12px;
 }
 
 .full-width {
