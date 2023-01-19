@@ -8,6 +8,9 @@ const onDeleteItem = async id => {
     const email = localStorage.getItem('@WalletApp:userEmail')
     await fetch(`https://mp-wallet-app-api.herokuapp.com/finances?date=${id}`, {
       method: 'DELETE',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
       headers: {
         email: email
       }
@@ -42,7 +45,7 @@ const renderFinancesList = data => {
   const valueText = document.createTextNode('Valor')
   const valueElement = document.createElement('th')
   valueElement.className = 'center'
-  dateElement.appendChild(valueText)
+  valueElement.appendChild(valueText)
   tableHeader.appendChild(valueElement)
 
   const actionText = document.createTextNode('Ação')
@@ -144,6 +147,7 @@ const renderFinanceElements = data => {
     }).format(revenues)
   )
   const revenueTextElement = document.createElement('h1')
+  revenueTextElement.id = 'revenue-element'
   revenueTextElement.className = 'mt smaller'
   revenueTextElement.appendChild(revenueText)
   financeCard2.appendChild(revenueTextElement)
