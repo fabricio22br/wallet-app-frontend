@@ -1,5 +1,6 @@
 const renderFinancesList = data => {
   const table = document.getElementById('finances-table')
+  table.innerHTML = ''
 
   data.map(item => {
     const tableRow = document.createElement('tr')
@@ -49,18 +50,25 @@ const renderFinancesList = data => {
   })
 }
 
-const renderFinancesElements = () => {
+const renderFinancesElements = data => {
   const totalItems = data.length
   const revenues = data
     .filter(item => Number(item.value) > 0)
     .reduce((acc, item) => acc + Number(item.value), 0)
   const expenses = data
-    .filter(() => Number(item.value) < 0)
+    .filter(item => Number(item.value) < 0)
     .reduce((acc, item) => acc + Number(item.value), 0)
   const totalValue = revenues + expenses
 
   // render total items
   const financeCard1 = document.getElementById('finance-card-1')
+  financeCard1.innerHTML = ''
+
+  const totalSubtext = document.createTextNode('Total de lançamentos')
+  const totalSubTextElement = document.createElement('h3')
+  totalSubTextElement.appendChild(totalSubtext)
+  financeCard1.appendChild(totalSubTextElement)
+
   const totalText = document.createTextNode(totalItems)
   const totalElement = document.createElement('h1')
   revenueTextElement.className = 'mt smaller'
@@ -69,6 +77,13 @@ const renderFinancesElements = () => {
 
   // render total revenue
   const financeCard2 = document.getElementById('finance-card-2')
+  financeCard2.innerHTML = ''
+
+  const revenueSubtext = document.createTextNode('Receitas')
+  const revenueSubTextElement = document.createElement('h3')
+  revenueSubTextElement.appendChild(revenueSubtext)
+  financeCard2.appendChild(revenueSubTextElement)
+
   const revenueText = document.createTextNode(
     new Intl.NumberFormat('pt-BR', {
       style: 'currency',
@@ -82,6 +97,13 @@ const renderFinancesElements = () => {
 
   // render total expenses
   const financeCard3 = document.getElementById('finance-card-3')
+  financeCard3.innerHTML = ''
+
+  const expensesSubtext = document.createTextNode('Despesas')
+  const expensesSubTextElement = document.createElement('h3')
+  expensesSubTextElement.appendChild(expensesSubtext)
+  financeCard3.appendChild(expensesSubTextElement)
+
   const expensesText = document.createTextNode(
     new Intl.NumberFormat('pt-BR', {
       style: 'currency',
@@ -95,6 +117,13 @@ const renderFinancesElements = () => {
 
   // render total balanço
   const financeCard4 = document.getElementById('finance-card-4')
+  financeCard4.innerHTML = ''
+
+  const balanceSubtext = document.createTextNode('Balanço')
+  const balanceSubTextElement = document.createElement('h3')
+  balanceSubTextElement.appendChild(balanceSubtext)
+  financeCard4.appendChild(balanceSubTextElement)
+
   const balanceText = document.createTextNode(
     new Intl.NumberFormat('pt-BR', {
       style: 'currency',
@@ -186,8 +215,63 @@ const onCloseModal = () => {
   modal.style.display = 'none'
 }
 
+const onCallAddFinance = async data => {
+  try {
+    const email = localStorage.getItem('@WalletApp:userEmail')
+
+    const response = await fetch(
+      'https://mp-wallet-app-api.herokuapp.com/finances',
+      {
+        method: 'post',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          email: email
+        },
+        body: JSON.stringify(data)
+      }
+    )
+    const user = await response.json()
+    return user
+  } catch (error) {
+    return { error }
+  }
+}
+
+const onCreateFinanceRelease = async target => {
+  try {
+    const title = target[0].value
+    const value = Number(target[1].value)
+    const date = target[2].value
+    const category = Number(target[3].value)
+    const result = await onCallAddFinance({
+      title,
+      value,
+      date,
+      category_id: category
+    })
+
+    if (result.error) {
+      alert('error ao adicionar novo dado financeiro.')
+      return
+    }
+    onCloseModal()
+    onLoadFinancesData()
+  } catch (error) {
+    alert('error ao adicionar novo dado financeiro.')
+  }
+}
+
 window.onload = () => {
   onLoadUserInfo()
   onLoadFinancesData()
   onLoadCategories()
+
+  const form = document.getElementById('form-finance-release')
+  form.onsubmit = event => {
+    event.preventDefault()
+    onCreateFinanceRelease(event.target)
+  }
 }
