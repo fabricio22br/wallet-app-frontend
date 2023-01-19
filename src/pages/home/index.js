@@ -1,3 +1,23 @@
+const onLogout = () => {
+  localStorage.clear()
+  window.open('../../../index.html', '_self')
+}
+
+const onDeleteItem = async id => {
+  try {
+    const email = localStorage.getItem('@WalletApp:userEmail')
+    await fetch(`https://mp-wallet-app-api.herokuapp.com/finances?date=${id}`, {
+      method: 'DELETE',
+      headers: {
+        email: email
+      }
+    })
+    onLoadFinancesData()
+  } catch (error) {
+    alert('error ao deletar o item')
+  }
+}
+
 const renderFinancesList = data => {
   const table = document.getElementById('finances-table')
   table.innerHTML = ''
@@ -71,6 +91,8 @@ const renderFinancesList = data => {
 
     // delete
     const deleteTd = document.createElement('td')
+    deleteTd.style.cursor = 'pointer'
+    deleteTd.onclick = () => onDeleteItem(item.id)
     deleteTd.className = 'right'
     const deleteText = document.createTextNode('Deletar')
     deleteTd.appendChild(deleteText)
@@ -81,7 +103,7 @@ const renderFinancesList = data => {
   })
 }
 
-const renderFinancesElements = data => {
+const renderFinanceElements = data => {
   const totalItems = data.length
   const revenues = data
     .filter(item => Number(item.value) > 0)
@@ -170,10 +192,10 @@ const renderFinancesElements = data => {
 
 const onLoadFinancesData = async () => {
   try {
-    const date = '15-12-2022'
+    const dateInputValue = document.getElementById('select-date').value
     const email = localStorage.getItem('@WalletApp:userEmail')
     const result = await fetch(
-      `https://mp-wallet-app-api.herokuapp.com/finances?date=${date}`,
+      `https://mp-wallet-app-api.herokuapp.com/finances?date=${dateInputValue}`,
       {
         method: 'GET',
         headers: {
@@ -182,7 +204,7 @@ const onLoadFinancesData = async () => {
       }
     )
     const data = await result.json()
-    renderFinancesElements(data)
+    renderFinanceElements(data)
     renderFinancesList(data)
     return data
   } catch (error) {
@@ -205,6 +227,8 @@ const onLoadUserInfo = () => {
 
   // add user link
   const logoutElement = document.createElement('a')
+  logoutElement.onclick = () => onLogout()
+  logoutElement.style.cursor = 'pointer'
   const logoutText = document.createTextNode('sair')
   logoutElement.appendChild(logoutText)
   navbarUserInfo.appendChild(logoutElement)
@@ -295,7 +319,17 @@ const onCreateFinanceRelease = async target => {
   }
 }
 
+const setInitialDate = () => {
+  const dateInput = document.getElementById('select-date')
+  const nowDate = new Date().toISOString().split('T')[0]
+  dateInput.value = nowDate
+  dateInput.addEventListener('change', () => {
+    onLoadFinancesData()
+  })
+}
+
 window.onload = () => {
+  setInitialDate()
   onLoadUserInfo()
   onLoadFinancesData()
   onLoadCategories()
