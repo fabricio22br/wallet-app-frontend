@@ -6,7 +6,7 @@ const onLogout = () => {
 const onDeleteItem = async id => {
   try {
     const email = localStorage.getItem('@WalletApp:userEmail')
-    await fetch(`https://mp-wallet-app-api.herokuapp.com/finances?date=${id}`, {
+    await fetch(`https://mp-wallet-app-api.herokuapp.com/finances/${id}`, {
       method: 'DELETE',
       mode: 'cors',
       cache: 'no-cache',
@@ -127,8 +127,8 @@ const renderFinanceElements = data => {
 
   const totalText = document.createTextNode(totalItems)
   const totalElement = document.createElement('h1')
-  revenueTextElement.className = 'mt smaller'
-  revenueTextElement.appendChild(totalText)
+  totalElement.className = 'mt smaller'
+  totalElement.appendChild(totalText)
   financeCard1.appendChild(totalElement)
 
   // render total revenue
