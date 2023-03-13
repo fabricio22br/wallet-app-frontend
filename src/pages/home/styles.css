@@ -110,7 +110,7 @@ td.center {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 280px;
+  width: 245px;
   height: 140px;
   border-radius: 24px;
   background-color: #ffffff;
@@ -177,4 +177,151 @@ td.center {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+@media only screen and (max-device-width: 450px) {
+  input {
+    background-color: transparent;
+    width: 100%;
+    height: 56px;
+    border-color: #06bee1;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 8px;
+    color: #010400;
+    font-size: 24px;
+    font-weight: 400;
+    padding: 6px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+  }
+
+  select {
+    background-color: transparent;
+    width: 100%;
+    height: 56px;
+    border-color: #06bee1;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 8px;
+    color: #010400;
+    font-size: 24px;
+    font-weight: 400;
+    padding: 6px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+  }
+
+  button {
+    background-color: #5936cd;
+    height: 56px;
+    width: 432px;
+    border-radius: 12px;
+    color: #f4f4f9;
+    font-weight: bold;
+    font-size: 27px;
+    border-color: #5936cd;
+    border-width: 2px;
+    border-style: solid;
+    cursor: pointer;
+  }
+
+  label {
+    width: 100%;
+    font-size: 26px;
+    font-weight: 500;
+  }
+
+  th {
+    font-size: 25px;
+    text-align: left;
+    color: #7c7c7c;
+  }
+
+  td {
+    font-size: 20px;
+    color: #7c7c7c;
+  }
+
+  h2 {
+    font-size: 34px;
+    font-weight: bolder;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  h3 {
+    font-size: 27px;
+    font-weight: bolder;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  button.small {
+    background-color: #ffffff;
+    color: #010400;
+    font-size: 23px;
+    border-radius: 8px;
+    width: 130px;
+    height: 67px;
+  }
+
+  .navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    height: 120px;
+    background-color: #ffffff;
+    padding: 24px 122px;
+    box-sizing: border-box;
+  }
+
+  .finance-card-container {
+    display: grid;
+    width: 100%;
+    column-gap: 38px;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto;
+    justify-content: center;
+    align-content: center;
+    margin-top: 48px;
+  }
+
+  .finance-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 273px;
+    height: 140px;
+    margin-bottom: 50px;
+    margin: 10px;
+    border-radius: 24px;
+    background-color: #ffffff;
+  }
+
+  .table-content-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: #ffffff;
+    border-radius: 24px;
+    height: 592px;
+    padding: 24px;
+    box-sizing: border-box;
+  }
+
+  .table-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0px 122px;
+    box-sizing: border-box;
+  }
 }
