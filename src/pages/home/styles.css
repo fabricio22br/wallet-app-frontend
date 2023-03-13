@@ -292,12 +292,33 @@ td.center {
     box-sizing: border-box;
   }
 
+  .input-calendar {
+    width: 160px;
+    height: 42px;
+    text-align: center;
+    font-size: 19px;
+    margin-left: 90px;
+    font-weight: bold;
+  }
+
+  .navbar-user-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 35px;
+    height: 17px;
+    width: 27px;
+    padding: 18px;
+    border-radius: 24px;
+    background-color: #e4fde1;
+  }
+
   .navbar-user-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    max-width: 190px;
+    max-width: 200%;
     width: 260px;
     height: 100%;
   }
